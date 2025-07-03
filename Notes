@@ -1,0 +1,120 @@
+*** WHAT ***
+
+Nginx: Handles incoming HTTPS requests from users and sends responses back. Acts as a webserver or reverse proxy.
+WordPress: (PHP app) Runs the WordPress application, which is a PHP program. Handles all the logic of the website.
+MariaDB	Runs a database server that stores all WordPress's posts, users, comments, settings, etc.
+
+One receives customer calls (nginx),
+One processes requests (WordPress/PHP),
+One maintains all records and data (MariaDB).
+
+*** TO DOs ***
+- .env en secrets updaten + info veranderen in andere files
+- solve the waiting issue
+- herstructureren
+- figure out comment stuff
+
+ok
+- best practices for Dockerfiles doorlezen
+- check what 3306 is about
+- Franse website helemaal doorlezen
+- check if restart:always is always right
+- Makefile afwerken
+- waar komen volumes? html in tools?
+- configure wordpress with wpcli (with two users)
+- The displayed page must be the configured WordPress website (you shouldn't see the WordPress Installation page)
+- it's important that your main process correctly handles signals like SIGTERM, SIGINT
+
+
+optional:
+- freshen up makefile with a list of options and colors
+- add something beautiful to wordpress site
+
+
+
+
+
+
+*** USEFUL COMMANDS *** 
+
+docker build -t nginx .
+docker image ls
+docker run -it nginx (# same as docker run --interactive --tty nginx)
+docker run -it --entrypoint /bin/sh nginx
+docker volume create my-volume
+docker run -it --mount source=myvolume,destination=/my-data/ 
+	(#newer more verbose style)
+docker run -it -v myvolume:/my-data/ (#shorthand)
+docker run -d -p 8081:80 -v $(pwd)/html/:/usr/share/nginx/html nginx 
+	(# -d flag for detached mode which makes docker run in the background)
+docker ps -a
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+docker logs <container_id>
+docker pull "NameOfTheImage" (pull a pre-existing image from dockerhub)
+
+sudo mount -t vboxsf 15_Inception /mnt/shared
+sudo apt install build-essential (to make sure make works)
+
+Add this line to /etc/hosts on your machine (which lets your browser resolve that name to your local machine):
+127.0.0.1 lde-taey.42.fr
+
+docker compose up --build
+docker compose up -d -- build (to let it run in the background)
+docker compose down -v --remove-orphans
+
+docker exec -it <container_name> sh
+
+docker system prune -af --volumes
+
+# stop services that are running by default:
+sudo service nginx stop
+sudo service mariadb stop
+sudo service apache2 stop
+sudo service mysql stop
+
+# stop everything
+docker stop $(docker ps -qa); docker rm $(docker ps -qa); docker rmi -f $(docker images -qa); docker volume rm $(docker volume ls -q); docker network rm $(docker network ls -q) 2>/dev/null
+
+# draft
+-- Use the new database
+USE `${MYSQL_DATABASE}`;
+
+-- Create a simple table
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Insert some dummy users
+INSERT INTO users (name, email) VALUES
+('Mr Bojangles', 'mrbojangles@gmail.com'),
+('The Tooth Fairy', 'loveteeth@hotmail.com'),
+('Mrs Robinson', 'mrsrobinson@yahoo.com');
+
+
+*** IMPORTANT INFORMATION ***
+
+name of domain:
+42.fr
+
+OS:
+Debian Bookworm (12.0 64-bit PC)
+
+name of host: lde-taey
+name of user: lieselotdetaeye
+
+root password: roothello2000
+user password: hello2000
+
+
+
+***WORDPRESS***
+
+Site Title: Welcome to the Interwebz
+
+Username: site_manager
+
+Password: heatWave42!

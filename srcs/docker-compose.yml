@@ -1,0 +1,66 @@
+services :
+
+  web:
+    build: ./requirements/nginx
+    image: nginx
+    container_name: mynginx
+    volumes:
+    - ./requirements/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+    - wordpress_data:/var/www/html
+    ports:
+    - "443:443"
+    env_file : .env
+    depends_on:
+    - wordpress
+    networks:
+      - my_network
+    restart: unless-stopped
+  
+  wordpress:
+    build: ./requirements/wordpress
+    image: wordpress
+    container_name: mywordpress
+    depends_on:
+    - mariadb
+    env_file : .env
+    networks:
+    - my_network
+    volumes:
+    - ./requirements/wordpress/tools/www.conf:/etc/php/8.3/fpm/pool.d/www.conf
+    - wordpress_data:/var/www/html
+    restart: unless-stopped
+
+  mariadb:
+    build: ./requirements/mariadb
+    image: mariadb
+    container_name: mymariadb
+    env_file : .env
+    # secrets:
+    #  - db_root_password
+    networks:
+    - my_network
+    volumes:
+    - mariadb_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/lde-taey/data/mariadb'
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/lde-taey/data/wordpress'
+
+secrets:
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+
+networks:
+  my_network:
+    driver: bridge
