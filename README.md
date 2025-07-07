@@ -18,8 +18,8 @@ I included a sample Secrets folder.
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/three-tier-app.git
-cd three-tier-app
+git clone https://github.com/lotte-detaeye/inception.git
+cd inception
 ```
 
 2. Create your .env file based on the sample:
