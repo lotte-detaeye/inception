@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+MARIADB_ROOT_PASSWORD=$(cat $MARIADB_ROOT_PASSWORD_FILE)
+MARIADB_PASSWORD=$(cat $MARIADB_PASSWORD_FILE)
+
 # if [ ! -d "/var/lib/mysql/mysql/" ]; then
     echo "Initializing database..."
     mysql_install_db --user=mysql --datadir=/var/lib/mysql

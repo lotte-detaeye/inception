@@ -1,4 +1,4 @@
-FROM debian:bookworm
+FROM debian:bullseye
 
 # Create necessary directories
 RUN mkdir -p /var/www/html
@@ -31,17 +31,17 @@ RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc
 
 # Install PHP and extensions
 RUN apt-get update -y \
-&& apt-get install -y php8.3 \
-    php8.3-cli \
-    php8.3-curl \
-    php8.3-fpm \
-    php8.3-mysql \
+&& apt-get install -y php7.4 \
+    php7.4-cli \
+    php7.4-curl \
+    php7.4-fpm \
+    php7.4-mysql \
     php-json \
     php-common && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Make sure /usr/bin/php points to php8.3
-RUN ln -sf /usr/bin/php8.3 /usr/bin/php
+# Make sure /usr/bin/php points to php7.4
+RUN ln -sf /usr/bin/php7.4 /usr/bin/php
 
 # Install wp-cli
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
@@ -50,6 +50,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 
 # Copy script to a place where it can be executed
 COPY ./tools/wp-setup.sh /usr/local/bin/wp-setup.sh
+RUN chmod +x /usr/local/bin/wp-setup.sh
 
 # expose port 9000 for php to work
 EXPOSE 9000

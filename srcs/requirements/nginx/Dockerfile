@@ -1,4 +1,4 @@
-FROM debian:bookworm
+FROM debian:bullseye
 
 # Install Nginx and other useful programs
 RUN apt-get update -y && \
@@ -21,17 +21,7 @@ RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt \
 # Change ownership and permissions
 RUN chown www-data:www-data /etc/nginx/ssl
 RUN chmod -R 700 /etc/nginx/ssl
-
-# Copy necessary html files
-# COPY ./tools/ /usr/share/nginx/html/
-
-# Create a custom NginX configuration file (copying happens in yaml file)
-# RUN mkdir -p /var/run/nginx /var/log/nginx /run/nginx /var/lib/nginx
-
-# Change ownership and permissions
-# RUN chown -R www-data:www-data /usr/share/nginx/html /var/lib/nginx /var/run/nginx /var/log/nginx /run/nginx
 RUN chmod -R 755 /usr/share/nginx/html/ 
-# /var/lib/nginx /var/run/nginx /var/log/nginx /run/nginx
 
 # Expose port 443 for HTTPS traffic
 EXPOSE 443

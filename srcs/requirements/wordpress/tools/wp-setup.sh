@@ -1,27 +1,14 @@
 #!/bin/bash
 set -e
 
-WP_PATH="/var/www/html"
+# Load variables
+export $(grep -v '^#' .env | xargs)
+DB_PASSWORD=$(cat $DB_PASSWORD_FILE)
+WP_PATH=/var/www/html
+export $(cat /run/secrets/credentials | xargs)
 
-# WordPress DB credentials (hardcoded for now, or sourced from Docker env)
-DB_NAME="wordpress"
-DB_USER="dbuser"
-DB_PASS="hello2000"
-DB_HOST="mariadb:3306"
-
-ADMIN_USER="site_manager"
-ADMIN_EMAIL="lde-taey@student.42berlin.de"
-ADMIN_PASS="heatWave42!"
-SITE_URL="https://lde-taey.42.fr" # TODO is this right?
-SITE_TITLE="Welcome to the Interwebz"
-
-# Extra user credentials
-EXTRA_USER="Mr. Bojangles"
-EXTRA_PASS="hellothere"
-EXTRA_EMAIL="mrbojangles@yahoo.com"
-EXTRA_ROLE="author"   # roles: subscriber, contributor, author, editor
-
-sleep 15
+# Wait for MariaDB
+sleep 10
 
 # Download WordPress if missing
 if [ ! -f /var/www/html/wp-config.php ]; then
@@ -38,7 +25,7 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 	wp config create --allow-root \
 		--dbname="$DB_NAME" \
     	--dbuser="$DB_USER" \
-    	--dbpass="$DB_PASS" \
+    	--dbpass="$DB_PASSWORD" \
     	--dbhost="$DB_HOST" \
   		--path="$WP_PATH"
 fi
@@ -72,4 +59,42 @@ if wp user get admin --path="$WP_PATH" --allow-root >/dev/null 2>&1; then
 	wp user delete admin --reassign="$ADMIN_USER" --path="$WP_PATH" --allow-root
 fi
 
-exec php-fpm8.3 -F
+# Add a post
+EXISTS=$(wp --path="$WP_PATH" post list --post_type=post --allow-root --post_status=publish \
+          --title="blessing the boats" --format=ids)
+
+if [ -z "$EXISTS" ]; then
+  wp post create  --path="$WP_PATH" \
+    --allow-root \
+    --post_type=post \
+    --post_title="blessing the boats" \
+  --post_content="$(cat <<EOF
+by Lucille Clifton
+
+                                    (at St. Mary's)
+may the tide
+that is entering even now
+the lip of our understanding
+carry you out
+beyond the face of fear
+may you kiss
+the wind then turn from it
+certain that it will
+love your back     may you
+open your eyes to water
+water waving forever
+and may you in your innocence
+sail through this to that
+
+
+EOF
+)" \
+     --post_status=publish \
+     --post_author=$AUTHOR_ID
+else
+  echo "Post already exists with ID: $EXISTS"
+fi
+
+mkdir -p /run/php
+
+exec php-fpm7.4 -F

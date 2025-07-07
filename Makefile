@@ -1,20 +1,22 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: lde-taey <lde-taey@student.42berlin.de>    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/03/20 17:56:55 by lde-taey          #+#    #+#              #
-#    Updated: 2025/07/02 19:51:19 by lde-taey         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 COMPOSE = docker compose -f srcs/docker-compose.yml
 SERVICES := mariadb nginx wordpress
 DATA_DIR = /home/lde-taey/data
 
-.PHONY: all build rebuild up down re clean
+.PHONY: help all build rebuild up down re clean
+
+help:
+	@echo "Before starting the program, make sure the right domain name is added to your /etc/hosts file."
+	@echo "You will also need a folder called '/home/lde-taey/data' for the volumes"
+	@echo ""
+	@echo "Available commands:"
+	@echo "  make all        - Default target: builds and starts containers"
+	@echo "  make build      - Build Docker images"
+	@echo "  make rebuild    - Build Docker images from scratch (no cache)"
+	@echo "  make up         - Start all containers"
+	@echo "  make down       - Stop all containers and remove volumes and orphans"
+	@echo "  make clean      - Stop and remove all Docker containers, images, volumes, and local data"
+	@echo "  make re         - Clean, rebuild, and start containers (same as 'make clean rebuild up')"
+	@echo "  make help       - Show this help message"
 
 all: build up
 	
@@ -28,7 +30,7 @@ rebuild:
 
 up:
 	@echo "Starting all containers"
-	$(COMPOSE) up -d
+	$(COMPOSE) up
 
 down:
 	@echo "Stopping all containers"

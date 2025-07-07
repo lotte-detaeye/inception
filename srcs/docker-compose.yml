@@ -23,10 +23,13 @@ services :
     depends_on:
     - mariadb
     env_file : .env
+    secrets:
+      - db_password
+      - credentials
     networks:
     - my_network
     volumes:
-    - ./requirements/wordpress/tools/www.conf:/etc/php/8.3/fpm/pool.d/www.conf
+    - ./requirements/wordpress/conf/www.conf:/etc/php/7.4/fpm/pool.d/www.conf
     - wordpress_data:/var/www/html
     restart: unless-stopped
 
@@ -35,8 +38,9 @@ services :
     image: mariadb
     container_name: mymariadb
     env_file : .env
-    # secrets:
-    #  - db_root_password
+    secrets:
+      - db_root_password
+      - db_password
     networks:
     - my_network
     volumes:
@@ -59,7 +63,11 @@ volumes:
 
 secrets:
   db_root_password:
-    file: ../secrets/db_root_password.txt
+    file: ../secrets/db_root_password
+  db_password:
+    file: ../secrets/db_password
+  credentials:
+    file: ../secrets/credentials.txt
 
 networks:
   my_network:
