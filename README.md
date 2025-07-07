@@ -6,7 +6,7 @@ This repository contains a **three-tier web application** built using Docker and
 - **Backend (e.g., PHP-FPM/WordPress)**: Handles dynamic content and application logic.
 - **Database (MariaDB)**: Manages persistent data storage.
 
-
+I included a sample Secrets folder. 
 
 ### Prerequisites
 
@@ -36,4 +36,4 @@ docker-compose up --build
 
 4. Access your application:
 
-Web: https://localhost
+In your browser: https://localhost
