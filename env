@@ -1,0 +1,12 @@
+# MARIADB SETUP
+MARIADB_DATABASE=wordpress
+MARIADB_USER=dbuser
+MARIADB_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
+MARIADB_PASSWORD_FILE=/run/secrets/db_password
+
+# WORDPRESS SETUP
+DB_USER=dbuser
+DB_NAME=wordpress
+DB_HOST=mariadb:3306
+DB_PASSWORD_FILE=/run/secrets/db_password
+WP_PATH="/var/www/html"
