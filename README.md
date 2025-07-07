@@ -6,6 +6,8 @@ This repository contains a **three-tier web application** built using Docker and
 - **Backend (e.g., PHP-FPM/WordPress)**: Handles dynamic content and application logic.
 - **Database (MariaDB)**: Manages persistent data storage.
 
+  
+
 
 ## Architecture
 Client ──▶ Nginx (TLS 1.2/1.3)
@@ -17,6 +19,9 @@ WordPress / PHP-FPM
 MariaDB
 
 Each service runs in its own container and communicates over an internal Docker network. This setup is suitable for local development and can be extended for staging or production use with additional hardening.
+
+
+
 
 
 ## 🚀 Getting Started
