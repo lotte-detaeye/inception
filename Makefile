@@ -5,8 +5,7 @@ DATA_DIR = /home/lde-taey/data
 .PHONY: help all build rebuild up down re clean
 
 help:
-	@echo "Before starting the program, make sure the right domain name is added to your /etc/hosts file."
-	@echo "You will also need a folder called '/home/lde-taey/data' for the volumes"
+	@echo "You will also need a folder called '/home/dockerfolder/data' for the volumes"
 	@echo ""
 	@echo "Available commands:"
 	@echo "  make all        - Default target: builds and starts containers"
