@@ -1,12 +1,14 @@
 # Three-Tier Web Application with Docker
 
-This repository contains a **three-tier web application** built using Docker and Docker Compose. It demonstrates a modular and production-aware architecture, separating concerns into three main services:
+This repository contains a **three-tier web application** built using Docker and Docker Compose. You should be able to run a very basic Wordpress website on your own system after building and running the Docker containers in this repository.
+
+The project demonstrates a modular and production-aware architecture, using three main separate services:
 
 - **Frontend (Nginx)**: Serves static content and acts as a reverse proxy.
-- **Backend (e.g., PHP-FPM/WordPress)**: Handles dynamic content and application logic.
+- **Backend (PHP-FPM/WordPress)**: Handles dynamic content and application logic.
 - **Database (MariaDB)**: Manages persistent data storage.
 
-I included a sample Secrets folder. 
+I included a sample Secrets folder in order to make test runs possible.
 
 ### Prerequisites
 
