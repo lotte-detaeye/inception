@@ -24,7 +24,7 @@ Each service runs in its own container and communicates over an internal Docker 
 
 
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
