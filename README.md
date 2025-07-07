@@ -9,7 +9,7 @@ This repository contains a **three-tier web application** built using Docker and
   
 
 
-## Architecture
+### Architecture
 Client ──▶ Nginx (TLS 1.2/1.3)
 │
 ▼
@@ -20,11 +20,6 @@ MariaDB
 
 Each service runs in its own container and communicates over an internal Docker network. This setup is suitable for local development and can be extended for staging or production use with additional hardening.
 
-
-
-
-
-## Getting Started
 
 ### Prerequisites
 
