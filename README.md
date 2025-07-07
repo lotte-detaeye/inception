@@ -17,22 +17,23 @@ This repository contains a **three-tier web application** built using Docker and
 ### Setup
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/three-tier-app.git
-   cd three-tier-app
+```bash
+git clone https://github.com/yourusername/three-tier-app.git
+cd three-tier-app
+```
 
 2. Create your .env file based on the sample:
 
- ```bash
+```bash
 cp .env.example .env
 ```
 
 3. Build and run the containers:
 
- ```bash
-    docker-compose up --build
+```bash
+docker-compose up --build
 ```
 
 4. Access your application:
 
-    Web: https://localhost
+Web: https://localhost
