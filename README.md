@@ -1,2 +1,53 @@
-# Inception
-This project configures a 3 tier web application that uses docker containers for every service
+# Three-Tier Web Application with Docker
+
+This repository contains a **three-tier web application** built using Docker and Docker Compose. It demonstrates a modular and production-aware architecture, separating concerns into three main services:
+
+- **Frontend (Nginx)**: Serves static content and acts as a reverse proxy.
+- **Backend (e.g., PHP-FPM/WordPress)**: Handles dynamic content and application logic.
+- **Database (MariaDB)**: Manages persistent data storage.
+
+---
+
+## Architecture
+Client ──▶ Nginx (TLS 1.2/1.3)
+│
+▼
+WordPress / PHP-FPM
+│
+▼
+MariaDB
+
+Each service runs in its own container and communicates over an internal Docker network. This setup is suitable for local development and can be extended for staging or production use with additional hardening.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Docker (≥ 20.x)
+- Docker Compose (v2 recommended)
+- OpenSSL (for manual certificate generation, if needed)
+
+### Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/three-tier-app.git
+   cd three-tier-app
+
+2. Create your .env file based on the sample:
+
+ ```bash
+cp .env.example .env
+```
+
+3. Build and run the containers:
+
+ ```bash
+    docker-compose up --build
+```
+
+4. Access your application:
+
+    Web: https://localhost
